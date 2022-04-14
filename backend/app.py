@@ -58,6 +58,7 @@ def data():
     print(live_df)
     return live_df.to_json()
 
+@app.route('/trainData', methods=['GET'])
 def trainData():
     train_data = pd.read_excel('data/SPX_train_0.xlsx')
 
@@ -68,11 +69,13 @@ def trainData():
         min.append(min(ser))
         max.append(max(ser))
 
+    return min, max
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
 url = "https://localhost:5000/predict"
-files = {'files':open('C:\questionnaire\/backend\data\SPX_live0.xlsx','rb')}
+files = {'files':open('/questionnaire/backend/data/SPX_live0.xlsx','rb')}
 x = requests.post(url, files=files)
 
 #POST request
